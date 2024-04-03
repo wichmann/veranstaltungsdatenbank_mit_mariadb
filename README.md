@@ -1,3 +1,5 @@
+[![Docker Image CI](https://github.com/wichmann/veranstaltungsdatenbank/actions/workflows/docker-image.yml/badge.svg)](https://github.com/wichmann/veranstaltungsdatenbank/actions/workflows/docker-image.yml)
+
 # Veranstaltungsdatenbank
 
 ## Deployment mit Docker
