@@ -1,4 +1,5 @@
 [![Docker Image CI](https://github.com/wichmann/veranstaltungsdatenbank/actions/workflows/docker-image.yml/badge.svg)](https://github.com/wichmann/veranstaltungsdatenbank/actions/workflows/docker-image.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-red.svg?style=flat)](http://choosealicense.com/licenses/mit/)
 
 # Veranstaltungsdatenbank
 
