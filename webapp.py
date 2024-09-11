@@ -59,8 +59,8 @@ except mariadb.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")
     sys.exit(1)
 cursor = connection.cursor()
-cursor.execute("""CREATE TABLE IF NOT EXISTS veranstaltungen (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  name TEXT, place TEXT, date DATE)""")
+cursor.execute("""CREATE TABLE IF NOT EXISTS veranstaltungen (id INTEGER AUTO_INCREMENT,
+                  name TEXT, place TEXT, date DATE, PRIMARY KEY (id))""")
 cursor.execute("""INSERT INTO veranstaltungen VALUES (NULL, 'Konzert', 'Bühne 1', '2018-01-05')""")
 cursor.execute("""INSERT INTO veranstaltungen VALUES (NULL, 'Weinprobe', 'Wein Müller GmbH', '2018-08-12')""")
 cursor.execute("""INSERT INTO veranstaltungen VALUES (NULL, 'Infoveranstaltung', 'Stadthaus', '2018-07-22')""")

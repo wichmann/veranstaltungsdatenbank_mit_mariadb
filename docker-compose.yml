@@ -3,6 +3,8 @@ services:
     build: https://github.com/wichmann/veranstaltungsdatenbank_mit_mariadb.git
     image: verandb
     restart: unless-stopped
+    depends_on:
+      - verandb-db
     ports:
       - "5000:5000"
     environment:
@@ -10,8 +12,8 @@ services:
       - VERANDB_PASSWORD=/run/secrets/verandb_db_password
       - VERANDB_DATABASE=veranstaltungsdatenbank
       - VERANDB_ROOT_PASSWORD=/run/secrets/verandb_db_root_password
-    volumes:
-      - verandb_data:/app
+    #volumes:
+    #  - verandb_data:/app
     secrets:
       - verandb_db_root_password
       - verandb_db_password

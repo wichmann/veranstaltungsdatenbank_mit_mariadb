@@ -10,8 +10,6 @@ EXPOSE 5000
 WORKDIR /app
 
 # Alle notwendigen Pakete (Python, MariaDB Connector) installieren
-RUN echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf.d/00-docker
-RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf.d/00-docker
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get update \
   && apt-get install -y python3 python3-pip libmariadb3 libmariadb-dev \
@@ -25,5 +23,5 @@ COPY webapp.py /app
 
 # Konfiguriere den Befehl, der im Container ausgeführt werden soll 
 # (Anwendung Python + Skriptname als Parameter)
-ENTRYPOINT [ "python" ]
+ENTRYPOINT [ "python3" ]
 CMD ["webapp.py" ]
