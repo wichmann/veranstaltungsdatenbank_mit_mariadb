@@ -1,6 +1,7 @@
 services:
   verandb:
-    image: ghcr.io/wichmann/veranstaltungsdatenbank_mit_mariadb:main
+    build: https://github.com/wichmann/veranstaltungsdatenbank_mit_mariadb.git
+    image: verandb
     restart: unless-stopped
     depends_on:
       - verandb-db

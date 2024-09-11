@@ -4,12 +4,16 @@
 
 # Veranstaltungsdatenbank
 
-## Deployment mit Docker
+## Deployment mit vorgebauten Image von Github Package Repository
 
-    docker build https://github.com/wichmann/veranstaltungsdatenbank.git -t verandb
-    docker run -p 5000:5000 -d verandb
-
-## Deployment mit Docker Compose
-
-    git clone https://github.com/wichmann/veranstaltungsdatenbank.git
+    git clone https://github.com/wichmann/veranstaltungsdatenbank_mit_mariadb.git
     docker compose up -d
+
+## Deployment mit selbstgebautem Image
+
+    git clone https://github.com/wichmann/veranstaltungsdatenbank_mit_mariadb.git
+    docker compose -f docker-compose.build.yml up --build -d
+
+## Ausgabe der Log-Nachrichten
+
+    docker compose logs -f
