@@ -18,7 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
   && rm -rf /var/lib/apt/lists/*
 
 # Notwendige Python-Bibliotheken installieren
-RUN pip install flask mariadb
+RUN pip install --break-system-packages flask mariadb
 
 # Kopiere lokale Datei in das Container-Image
 COPY webapp.py /app
