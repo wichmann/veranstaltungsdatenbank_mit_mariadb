@@ -9,6 +9,9 @@ EXPOSE 5000
 # Arbeitsverzeichnis im Container wechseln
 WORKDIR /app
 
+# Pakete für MariaDB Connector installieren
+apt install libmariadb3 libmariadb-dev
+
 # Notwendige Bibliotheken installieren
 RUN pip install flask mariadb
 
