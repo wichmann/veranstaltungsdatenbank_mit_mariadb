@@ -10,7 +10,7 @@ EXPOSE 5000
 WORKDIR /app
 
 # Pakete für MariaDB Connector installieren
-apt install libmariadb3 libmariadb-dev
+RUN apt install libmariadb3 libmariadb-dev
 
 # Notwendige Bibliotheken installieren
 RUN pip install flask mariadb
