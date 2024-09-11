@@ -1,7 +1,7 @@
 # Dockerfile
 
 # Basisimage basiert auf Ubuntu 24.04
-FROM python:3.11-alpine
+FROM ubuntu:24.04
 
 # Benenne Port, der von der Web-App genutzt wird
 EXPOSE 5000
@@ -10,7 +10,10 @@ EXPOSE 5000
 WORKDIR /app
 
 # Alle notwendigen Pakete (Python, MariaDB Connector) installieren
-RUN apk add mariadb-connector-c mariadb-connector-c-dev gcc libc-dev
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get update \
+  && apt-get install -y python3 python3-pip libmariadb3 libmariadb-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 # Notwendige Python-Bibliotheken installieren
 RUN pip install --break-system-packages flask mariadb
