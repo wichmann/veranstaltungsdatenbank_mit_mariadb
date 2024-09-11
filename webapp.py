@@ -3,42 +3,37 @@
 Es soll eine einfache Veranstaltungsdatenbank entwickelt werden. Die Datenbank
 speichert für eine Veranstaltung einen Namen, einen Ort und das Datum. Die
 Verwaltung läuft über einen Web-Server mit der Bibliothek Flask [1, 2]. Für die
-Datenhaltung kann eine SQLite-Datenbank [3] verwendet werden.
+Datenhaltung wird eine MariaDB-Datenbank [3] benötigt.
 
 Der Webserver enthält drei Endpunkte zur Verwaltung der Veranstaltungen:
  * /list - Ausgabe einer Liste aller Veranstaltungen
  * /add - Hinzufügen einer neuen Veranstaltung
  * /clear - Löschen aller gespeicherten Veranstaltungen
 
-Ergänzen Sie die fehlenden Statements, um die Datenbank-Tabelle anzulegen, die
-Veranstaltungsdaten auszulesen und zu speichern.
-
-Mögliche Erweiterungen:
-Als Erweiterung können mehr Informationen zu den Veranstaltungen hinzugefügt
-werden. Dazu muss das HTML-Formular ergänzt und die Datenbank-Tabelle erweitert
-werden. Außerdem könnten Informationen zu Ansprechpartnern in einer separaten
-Tabelle gespeichert werden.
-
 Hilfen:
  * Handbuch des Pakets Flask [1]
  * Einführender Artikel zu Flask [2]
- * Handbuch zur mitgelieferten Bibliothek "sqlite3" [3]
 
 Bibliotheken:
  * Flask - Leichtgewichtiges Web Application Framework
     pip install flask
+ * MariaDB - MariaDB Connector/Python
+    pip install mariadb
 
 Quellen:
 [1] https://flask.palletsprojects.com/en/2.1.x/
 [2] https://www.heise.de/ratgeber/Python-Framework-fuer-Webentwicklung-Einfacher-Einstieg-mit-Flask-6340642.html
-[3] https://docs.python.org/3/library/sqlite3.html
+[3] https://mariadb.com/resources/blog/how-to-connect-python-programs-to-mariadb/
 
 """
 
-import sqlite3
+
+import os
+import sys
 import webbrowser
 from datetime import datetime
 
+import mariadb
 from flask import Flask
 from flask import request
 
@@ -48,9 +43,21 @@ app = Flask(__name__)
 
 
 # initialisiere Datenbank im selben Thread wie HTTP-Server und erzeuge Tabellen
-DB_FILENAME = 'datenbank.db'
-connection = sqlite3.connect(
-    DB_FILENAME, check_same_thread=False, detect_types=sqlite3.PARSE_DECLTYPES)
+try:
+    db_user = os.getenv('VERANDB_USER', 'veranstaltungsdatenbank')
+    db_password = os.getenv('VERANDB_PASSWORD', '12345678')
+    db_name = os.getenv('VERANDB_DATABASE', 'veranstaltungsdatenbank')
+    db_root_password = os.getenv('VERANDB_ROOT_PASSWORD', '12345678')
+    connection = mariadb.connect(
+        user=db_user,
+        password=db_password,
+        host='verandb-db',
+        port=3306,
+        database=db_name
+    )
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
 cursor = connection.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS veranstaltungen (id INTEGER PRIMARY KEY AUTOINCREMENT,
                   name TEXT, place TEXT, date DATE)""")
@@ -147,5 +154,5 @@ def clear():
 
 
 if __name__ == '__main__':
-    #webbrowser.open_new_tab('http://localhost:5000')
+    # webbrowser.open_new_tab('http://localhost:5000')
     app.run(host='0.0.0.0', debug=True)

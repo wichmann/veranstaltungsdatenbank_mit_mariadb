@@ -10,7 +10,7 @@ EXPOSE 5000
 WORKDIR /app
 
 # Notwendige Bibliotheken installieren
-RUN pip install flask
+RUN pip install flask mariadb
 
 # Kopiere lokale Datei in das Container-Image
 COPY webapp.py /app
