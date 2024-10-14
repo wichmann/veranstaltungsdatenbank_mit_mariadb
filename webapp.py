@@ -45,9 +45,9 @@ app = Flask(__name__)
 # initialisiere Datenbank im selben Thread wie HTTP-Server und erzeuge Tabellen
 try:
     db_user = os.getenv('VERANDB_USER', 'veranstaltungsdatenbank')
-    db_password = os.getenv('VERANDB_PASSWORD', '12345678')
+    db_password_file = os.getenv('VERANDB_PASSWORD', '12345678')
+    db_password = open(db_password_file, 'r').read().strip() #replace('\n','')
     db_name = os.getenv('VERANDB_DATABASE', 'veranstaltungsdatenbank')
-    db_root_password = os.getenv('VERANDB_ROOT_PASSWORD', '12345678')
     connection = mariadb.connect(
         user=db_user,
         password=db_password,
